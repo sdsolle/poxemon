@@ -29,18 +29,20 @@ $pngnames = array("noun_597393","vaccination-sign","wild-virus-sign","pox-noun_2
 
 $pngcount = count($pngnames);
 
+// Create a shuffled deck of cards numbered 1-100
+$deck = range(1,100);
+shuffle($deck);
 
-// Pick 'n' random cards.
+// Take the first N cards, then sort in order.
+$deck = array_slice($deck, 0, $code);
+sort($deck);
 
-for ($i = 1; $i <= $code; $i++)
+
+// Deal the cards.
+foreach ($deck as &$pick)
 {
-
-	$pick = rand(1,100);
-
 	// The png number is the pick modulo the number of images.
 	$png = ($pick-1) % $pngcount;
-
-
 
 	echo "<img width='100' height='100' src='PNGs/".$pngnames[$png].".png' /><br/>";
 	echo "<h2>".$names[$pick]."</h2>";
