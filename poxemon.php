@@ -1,3 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link href="https://fonts.googleapis.com/css?family=Jura" rel="stylesheet" />
+<style>
+h2 { font-family: 'Jura', sans-serif; }
+i { font-family: 'Jura', sans-serif; }
+#roundrect
+{
+    border-radius: 25px;
+    border: 2px solid;
+    padding: 20px;
+    margin: 20px;
+    width: 400px;
+}
+</style>
+</head>
 <?php
 // Report all PHP errors
 error_reporting(-1);
@@ -31,7 +48,7 @@ if ( isset($_REQUEST['vaccinated']) && !empty($_REQUEST['vaccinated']))
 }
 
 // Let's do some grammar ;)
-$people = ($code < 2) ? "this [ 1 ] person" : "these [ ".$code." ] people";
+$people = ($code < 2) ? "this 1 person" : "these ".$code." people";
 
 // The heading! TODO: Put it in a div.
 if ($vaccinated)
@@ -73,10 +90,13 @@ foreach ($deck as &$pick)
 	$png = ($pick-1) % $pngcount;
 	echo "<!-- ".$png." --->\n";
 
-	echo "<img src='/png/".$pngnames[$png]."' /><br/>";
-	echo "<h2>".$names[$pick]."</h2>";
-	echo "<i>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sapien lacus, dictum quis erat sed, vestibulum accumsan turpis. In vehicula dignissim est. Nunc et dui ullamcorper, ullamcorper ipsum a, consequat</i></br>";
-	echo "<hr/>";
+	echo "<div id='roundrect'>\n";
+	echo "<img src='/png/".$pngnames[$png]."' /><br/>\n";
+	echo "<h2>".$names[$pick]."</h2>\n";
+	echo "<i>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sapien lacus, dictum quis erat sed, vestibulum accumsan turpis. In vehicula dignissim est. Nunc et dui ullamcorper, ullamcorper ipsum a, consequat</i></br>\n";
+	echo "</div>\n\n";
 }
 
 ?>
+</body>
+</html>
