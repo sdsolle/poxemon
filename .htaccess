@@ -1,2 +1,4 @@
 RewriteEngine on
+RewriteRule ^p/([0-9][0-9]).html$ index.php?code=$1 [L]
+RewriteRule ^p/0([0-9][0-9]).html$ index.php?code=$1&vaccinated=1 [L]
 
