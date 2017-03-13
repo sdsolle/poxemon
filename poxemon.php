@@ -3,15 +3,19 @@
 <head>
 <link href="https://fonts.googleapis.com/css?family=Jura" rel="stylesheet" />
 <style>
-h2 { font-family: 'Jura', sans-serif; }
-i { font-family: 'Jura', sans-serif; }
+body
+{
+    font-family: 'Jura', sans-serif;
+    text-align: center;
+    width: 420px;
+    margin: auto;
+}
 #roundrect
 {
     border-radius: 25px;
     border: 2px solid;
     padding: 20px;
-    margin: 20px;
-    width: 400px;
+    margin-top: 20px;
 }
 </style>
 </head>
@@ -50,7 +54,9 @@ if ( isset($_REQUEST['vaccinated']) && !empty($_REQUEST['vaccinated']))
 // Let's do some grammar ;)
 $people = ($code < 2) ? "this 1 person" : "these ".$code." people";
 
-// The heading! TODO: Put it in a div.
+// The heading! Now a div.
+echo "<div id='#intro'>\n";
+
 if ($vaccinated)
 {
 	echo "<h2>This is your Protection Collection.</h2>\n";
@@ -62,6 +68,7 @@ else
 	echo "<h2>This is your Infection Collection.</h2>\n";
 	echo "<h2>Because you chose not to get immunized, ".$people." in your community caught the shadowpox virus from you.</h2>\n";
 }
+echo "</div>\n";
 
 // One hundred names (plus dummy name zero).
 $names = array("","Abi","Agu","Ali","Ami","Ari","Ati","Bao","Bel","Bob","Cai","Cat","Chu","Dai","Daw","Dee","Des","Dua","Ebi","Efe","Eir","Eka","Eli","Eus","Fai","Fil","Gad","Gen","Gry","Hai","Hie","Ian","Ife","Ima","Ion","Ira","Iva","Jai","Jas","Jen","Jil","Jon","Jud","Kai","Kei","Keo","Kim","Kol","Lee","Liu","Liz","Lon","Luz","Mai","Meg","Mia","Moe","Nai","Nev","Nic","Nox","Oba","Oko","Oma","Ora","Osk","Pat","Peg","Qiu","Raj","Rao","Rik","Rui","Sam","Sei","Sia","Sol","Sue","Tad","Taj","Ted","Teo","Tim","Tor","Udo","Ulf","Una","Usi","Var","Viv","Vuk","Wid","Xan","Xue","Yaz","Yue","Yun","Zaw","Zhi","Zil","Zoe");
