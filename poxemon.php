@@ -1,36 +1,44 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta name="viewport" content="width=576" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
 <link href="https://fonts.googleapis.com/css?family=Jura" rel="stylesheet" />
 <style>
 body
 {
     font-family: 'Jura', sans-serif;
     text-align: center;
-    width: 420px;
+    width: 576px;
     margin: auto;
 }
 #header
 {
     position:relative;
-    width: 576px;
     height: 400px;
 }
 #intro
 {
+    width: 510px;
+    padding-left: 28px;
+    padding-right: 28px;
     position:absolute;
     bottom:0;
 }
 #roundrect
 {
+    width: 420px;
     border-radius: 25px;
     border: 2px solid;
     padding: 20px;
     margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
 }
 </style>
 </head>
 <body>
+<div id='container'>
 <div id='header'>
 <div id='anim'>
 <img src='/poxemon.gif' />
@@ -74,17 +82,17 @@ $people = ($code < 2) ? "this 1 person" : "these ".$code." people";
 
 $collection = "Infection";
 $choice = " not ";
-$caught = "<br/>caught";
+$caught = "caught";
 
 if ($vaccinated)
 {
 	$collection = "Protection";
 	$choice = "";
-	$caught = "did not</br>catch";
+	$caught = "did not catch";
 }
 
 echo "<h2>This is your ".$collection." Collection.</h2>\n";
-echo "<h2>Because you chose ".$choice."to get immunized,<br/>".$people." in your community ".$caught." the shadowpox virus from you.</h2>\n";
+echo "<h2>Because you chose ".$choice."to get immunized, ".$people." in your community ".$caught." the shadowpox virus from you.</h2>\n";
 
 echo "</div>\n";
 echo "</div>\n";
@@ -123,5 +131,6 @@ foreach ($deck as &$pick)
 }
 
 ?>
+</div>
 </body>
 </html>
