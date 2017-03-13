@@ -74,13 +74,13 @@ $people = ($code < 2) ? "this 1 person" : "these ".$code." people";
 
 $collection = "Infection";
 $choice = " not ";
-$caught = "did not catch";
+$caught = "<br/>caught";
 
 if ($vaccinated)
 {
 	$collection = "Protection";
 	$choice = "";
-	$caught = "caught";
+	$caught = "did not</br>catch";
 }
 
 echo "<h2>This is your ".$collection." Collection.</h2>\n";
