@@ -92,6 +92,10 @@ echo "</div>\n";
 // One hundred names (plus dummy name zero).
 $names = array("","Abi","Agu","Ali","Ami","Ari","Ati","Bao","Bel","Bob","Cai","Cat","Chu","Dai","Daw","Dee","Des","Dua","Ebi","Efe","Eir","Eka","Eli","Eus","Fai","Fil","Gad","Gen","Gry","Hai","Hie","Ian","Ife","Ima","Ion","Ira","Iva","Jai","Jas","Jen","Jil","Jon","Jud","Kai","Kei","Keo","Kim","Kol","Lee","Liu","Liz","Lon","Luz","Mai","Meg","Mia","Moe","Nai","Nev","Nic","Nox","Oba","Oko","Oma","Ora","Osk","Pat","Peg","Qiu","Raj","Rao","Rik","Rui","Sam","Sei","Sia","Sol","Sue","Tad","Taj","Ted","Teo","Tim","Tor","Udo","Ulf","Una","Usi","Var","Viv","Vuk","Wid","Xan","Xue","Yaz","Yue","Yun","Zaw","Zhi","Zil","Zoe");
 
+// Load the nanostories
+$nanostories = file("nanostories.tsv");
+echo '<!-- '; print_r($nanostories); echo ' --->';
+
 // Create a zero-index array containing files in png that aren't . or ..
 $pngnames = array_values(array_diff(scandir("png"), array(".", "..")));
 
@@ -119,7 +123,7 @@ foreach ($deck as &$pick)
 	echo "<div id='roundrect'>\n";
 	echo "<img src='/png/".$pngnames[$png]."' /><br/>\n";
 	echo "<h2>".$names[$pick]."</h2>\n";
-	echo "<i>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sapien lacus, dictum quis erat sed, vestibulum accumsan turpis. In vehicula dignissim est. Nunc et dui ullamcorper, ullamcorper ipsum a, consequat</i></br>\n";
+	echo "<i>".$nanostories[$pick-1]."</i></br>\n";
 	echo "</div>\n\n";
 }
 
