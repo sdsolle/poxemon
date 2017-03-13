@@ -94,12 +94,10 @@ $names = array("","Abi","Agu","Ali","Ami","Ari","Ati","Bao","Bel","Bob","Cai","C
 
 // Load the nanostories
 $nanostories = file("nanostories.tsv");
-echo '<!-- '; print_r($nanostories); echo ' --->';
 
 // Create a zero-index array containing files in png that aren't . or ..
 $pngnames = array_values(array_diff(scandir("png"), array(".", "..")));
 
-echo '<!-- '; print_r($pngnames); echo ' --->';
 $pngcount = count($pngnames);
 
 // Create a shuffled deck of cards numbered 1-99
@@ -109,9 +107,6 @@ shuffle($deck);
 // Take the first N cards, then sort in order.
 $deck = array_slice($deck, 0, $code);
 sort($deck);
-
-echo '<!-- '; print_r($deck); echo ' --->';
-
 
 // Deal the cards.
 foreach ($deck as &$pick)
