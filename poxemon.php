@@ -10,6 +10,17 @@ body
     width: 420px;
     margin: auto;
 }
+#header
+{
+    position:relative;
+    width: 576px;
+    height: 400px;
+}
+#intro
+{
+    position:absolute;
+    bottom:0;
+}
 #roundrect
 {
     border-radius: 25px;
@@ -19,6 +30,13 @@ body
 }
 </style>
 </head>
+<body>
+<div id='header'>
+<div id='anim'>
+<img src='/poxemon.gif' />
+</div>
+<div id='intro'>
+
 <?php
 // Report all PHP errors
 error_reporting(-1);
@@ -54,20 +72,21 @@ if ( isset($_REQUEST['vaccinated']) && !empty($_REQUEST['vaccinated']))
 // Let's do some grammar ;)
 $people = ($code < 2) ? "this 1 person" : "these ".$code." people";
 
-// The heading! Now a div.
-echo "<div id='#intro'>\n";
+$collection = "Infection";
+$choice = " not ";
+$caught = "did not catch";
 
 if ($vaccinated)
 {
-	echo "<h2>This is your Protection Collection.</h2>\n";
+	$collection = "Protection";
+	$choice = "";
+	$caught = "caught";
+}
 
-	echo "<h2>Because you chose to get immunized, ".$people." in your community did not catch the shadowpox virus from you.</h2>\n";
-}
-else
-{
-	echo "<h2>This is your Infection Collection.</h2>\n";
-	echo "<h2>Because you chose not to get immunized, ".$people." in your community caught the shadowpox virus from you.</h2>\n";
-}
+echo "<h2>This is your ".$collection." Collection.</h2>\n";
+echo "<h2>Because you chose ".$choice."to get immunized,<br/>".$people." in your community ".$caught." the shadowpox virus from you.</h2>\n";
+
+echo "</div>\n";
 echo "</div>\n";
 
 // One hundred names (plus dummy name zero).
