@@ -97,19 +97,12 @@ echo "<h2>Because you chose ".$choice."to get immunized, ".$people." in your com
 echo "</div>\n";
 echo "</div>\n";
 
-// One hundred names (plus dummy name zero).
-$names = array("","Abi","Agu","Ali","Ami","Ari","Ati","Bao","Bel","Bob","Cai","Cat","Chu","Dai","Daw","Dee","Des","Dua","Ebi","Efe","Eir","Eka","Eli","Eus","Fai","Fil","Gad","Gen","Gry","Hai","Hie","Ian","Ife","Ima","Ion","Ira","Iva","Jai","Jas","Jen","Jil","Jon","Jud","Kai","Kei","Keo","Kim","Kol","Lee","Liu","Liz","Lon","Luz","Mai","Meg","Mia","Moe","Nai","Nev","Nic","Nox","Oba","Oko","Oma","Ora","Osk","Pat","Peg","Qiu","Raj","Rao","Rik","Rui","Sam","Sei","Sia","Sol","Sue","Tad","Taj","Ted","Teo","Tim","Tor","Udo","Ulf","Una","Usi","Var","Viv","Vuk","Wid","Xan","Xue","Yaz","Yue","Yun","Zaw","Zhi","Zil","Zoe");
-
 // Load the nanostories
-$nanostories = file("nanostories.csv");
+$nanostories = array_map('str_getcsv', file("nanostories.csv"));
+$count = count($nanostories);
 
-// Create a zero-index array containing files in png that aren't . or ..
-$pngnames = array_values(array_diff(scandir("png"), array(".", "..")));
-
-$pngcount = count($pngnames);
-
-// Create a shuffled deck of cards numbered 1-99
-$deck = range(1,99);
+// Create a shuffled deck, with one card for each nanostory.
+$deck = range(0, $count-1);
 shuffle($deck);
 
 // Take the first N cards, then sort in order.
@@ -119,14 +112,14 @@ sort($deck);
 // Deal the cards.
 foreach ($deck as &$pick)
 {
-	// The png number is the pick, modulo the number of images.
-	$png = ($pick-1) % $pngcount;
-	echo "<!-- ".$png." --->\n";
+	$card = $nanostories[$pick];
+
+	echo "<!-- ".$pick." --->\n";
 
 	echo "<div id='roundrect'>\n";
-	echo "<img src='/png/".$pngnames[$png]."' /><br/>\n";
-	echo "<h2>".$names[$pick]."</h2>\n";
-	echo "<i>".$nanostories[$pick-1]."</i></br>\n";
+	echo "<img src='/png/".$card[1]."' /><br/>\n";
+	echo "<h2>".$card[0]."</h2>\n";
+	echo "<i>".$card[2]."</i></br>\n";
 	echo "</div>\n\n";
 }
 
