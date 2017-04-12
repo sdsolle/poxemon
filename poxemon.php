@@ -93,7 +93,7 @@ if ($vaccinated)
 
 echo "<h2>This is your ".$collection." Collection.</h2>\n";
 echo "<h2>Because you chose ".$choice."to get immunized, ".$people." in your community ".$caught." the shadowpox virus from you.</h2>\n";
-
+echo "<h3>Scroll down to the bottom of the page to add your own Shadowpox character.</h3>\n";
 echo "</div>\n";
 echo "</div>\n";
 
