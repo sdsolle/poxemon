@@ -10,7 +10,7 @@
 
 /******************************************************************************
  
-    void encode( uint infections, uint deaths, char* output)
+    void encode( unsigned int infections, unsigned int deaths, char* output)
  
 	Author:		Sean D. Sollé
 	Created:	2017/04/11
@@ -65,7 +65,7 @@
  ******************************************************************************/
 
 
-void encode(uint infections, uint deaths, char* output)
+void encode(unsigned int infections, unsigned int deaths, char* output)
 {
     
 /* 
@@ -86,11 +86,11 @@ void encode(uint infections, uint deaths, char* output)
      So a triangle number translates directly to the row at which 'N' infections start.
 */
 
-    uint triangle = (infections * (infections + 1)) / 2;
+    unsigned int triangle = (infections * (infections + 1)) / 2;
     
     // Since we know what row we're starting at, we just add the deaths to find the actual row.
     
-    uint row = triangle + deaths;   // + 5050; // If vaccinated.
+    unsigned int row = triangle + deaths;   // + 5050; // If vaccinated.
     
     // Note that we don't use zero (to ensure our codes start from '111')
     // and we've not included 'I' (to avoid being mistaken for '1').
@@ -99,7 +99,7 @@ void encode(uint infections, uint deaths, char* output)
     
     // With 22 characters, we're encoding in base 22.
     
-    uint base = int(strlen(alphabet));
+    unsigned int base = int(strlen(alphabet));
     
     // We want to write from the rightmost character (i.e. the least significant digit), and move left.
     // So we start with our index pointing at the terminating null ...
@@ -128,9 +128,9 @@ int main(int argc, const char * argv[])
     
     // Loop over every possible infection and death outcome.
     
-    for (uint infections=0; infections <= 99; infections++)
+    for (unsigned int infections=0; infections <= 99; infections++)
     {
-        for (uint deaths=0; deaths <= infections; deaths++)
+        for (unsigned int deaths=0; deaths <= infections; deaths++)
         {
            
             encode(infections, deaths, code);
