@@ -16,14 +16,12 @@
                     unsigned int deaths,
                     char* output)
 
-	Author:		Sean D. Sollé
-	Created:	2017/04/11
+    Author:	Sean D. Sollé
+    Created:	2017/04/11
 
-	Purpose:	Fill a three character string with a code representing vaccinations, infections and deaths.
-	Inputs:		Output character string, player vaccination status, number of deaths & infections.
+    Purpose:	Fill a three character string with a code representing vaccinations, infections and deaths.
+    Inputs:	Output character string, player vaccination status, number of deaths & infections.
     Outputs:    Poxemon code, a three character string.
-
-    Description:
 
     Encoding vaccination status, infections and deaths into a single code is a two-step process.
 
