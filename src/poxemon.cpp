@@ -48,8 +48,21 @@
 
     (See poxemon.csv for the complete list).
 
-    If we arrange the number of deaths in a triangle, with one row per infection,
-    then the row at which 'N' infections start is the triangle number of 'N'.
+    If we arrange the number of deaths in a triangle, with one row per infection ...
+
+    0
+    0 1
+    0 1 2
+    0 1 2 3
+
+    ...
+
+    0 1 2 3  ..   97
+    0 1 2 3  ...  97 98
+    0 1 2 3  .... 97 98 99
+
+
+    ... then the row at which 'N' infections start is the triangle number of 'N'.
 
     This means the outcome number is simply the row number + number of infections.
 
@@ -68,29 +81,14 @@
 void encode(unsigned int infections, unsigned int deaths, char* output)
 {
 
-/*
-
-    For each infection N, N+1 deaths are possible, giving N(N+1)/2 possible outcomes.
-
-     0
-     0 1
-     0 1 2
-     0 1 2 3
-
-     ...
-
-     0 1 2 3  ..   97
-     0 1 2 3  ...  97 98
-     0 1 2 3  .... 97 98 99
-
-     So a triangle number translates directly to the row at which 'N' infections start.
-*/
+    //  For each infection N, N+1 deaths are possible, giving N(N+1)/2 possible outcomes.
+    //  So a triangle number translates directly to the row at which 'N' infections start.
 
     unsigned int triangle = (infections * (infections + 1)) / 2;
 
-    // Since we know what row we're starting at, we just add the deaths to find the actual row.
+    // Since we know what row we're starting at, we just add the deaths to find the actual code.
 
-    unsigned int row = triangle + deaths;   // + 5050; // If vaccinated.
+    unsigned int code = triangle + deaths;   // + 5050; // If vaccinated.
 
     // Note that we don't use zero (to ensure our codes start from '111')
     // and we've not included 'I' (to avoid being mistaken for '1').
@@ -114,10 +112,10 @@ void encode(unsigned int infections, unsigned int deaths, char* output)
         index--;
 
         // Store the leastmost significant digit.
-        output[index] = alphabet[row % base];
+        output[index] = alphabet[code % base];
 
         // And shift the value we're converting one base N place to the right.
-        row = row/base;
+        code = code/base;
     }
 }
 
