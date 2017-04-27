@@ -5,18 +5,22 @@
 //  Copyright © 2017 Sean D. Sollé. All rights reserved.
 //
 
-#include <iostream>
+
 #include <string.h>
+#include "poxemon.h"
 
 /******************************************************************************
 
-    void encode( unsigned int infections, unsigned int deaths, char* output)
+    void poxencode( bool bVaccinated,
+                    unsigned int infections,
+                    unsigned int deaths,
+                    char* output)
 
 	Author:		Sean D. Sollé
 	Created:	2017/04/11
 
 	Purpose:	Fill a three character string with a code representing vaccinations, infections and deaths.
- 	Inputs:		Output character string, player vaccination status, number of deaths & infections.
+	Inputs:		Output character string, player vaccination status, number of deaths & infections.
     Outputs:    Poxemon code, a three character string.
 
     Description:
@@ -75,35 +79,43 @@
 
     Since 22^3 = 10648, we can represent all our outcome values using base 22.
 
+    If we use half the total values - 5324 - as our offset for vaccinated players,
+    the encoding starts on a nice round number - 'NAA'.
+
  ******************************************************************************/
 
 
-void encode(unsigned int infections, unsigned int deaths, char* output)
+void poxencode(bool bVaccinated, unsigned int infections, unsigned int deaths, char* output)
 {
 
-    //  For each infection N, N+1 deaths are possible, giving N(N+1)/2 possible outcomes.
-    //  So a triangle number translates directly to the row at which 'N' infections start.
+    // Calculate the triangle number of infections.
 
     unsigned int triangle = (infections * (infections + 1)) / 2;
 
-    // Since we know what row we're starting at, we just add the deaths to find the actual code.
+    // The triangle number is the row we're starting at, so we add the deaths to find the code number.
 
-    unsigned int code = triangle + deaths;   // + 5050; // If vaccinated.
+    unsigned int code = triangle + deaths;
 
-    // Note that we don't use zero (to ensure our codes start from '111')
-    // and we've not included 'I' (to avoid being mistaken for '1').
+    // If player is vaccinated, we start numbering with a value after 5050 (the last possible non-vaccinated number).
 
-    char alphabet[] = "123456789ABCDEFGHJKLMN";
+    if (bVaccinated)
+    {
+        // Use half the total values - 5324 - as our offset for vaccinated players,
+        code += 5324;
+    }
+
+
+    // We only need 22 characters, so we drop all the vowels after 'A'.
+    char alphabet[] = "ABCDFGHJKLMNPQRSTVWXYZ";
 
     // With 22 characters, we're encoding in base 22.
-
     unsigned int base = int(strlen(alphabet));
+
 
     // We want to write from the rightmost character (i.e. the least significant digit), and move left.
     // So we start with our index pointing at the terminating null ...
 
     int index = int(strlen(output));
-
 
     // If we've been passed an empty string, we never enter this loop.
     while (index > 0)
@@ -117,27 +129,5 @@ void encode(unsigned int infections, unsigned int deaths, char* output)
         // And shift the value we're converting one base N place to the right.
         code = code/base;
     }
-}
-
-int main(int argc, const char * argv[])
-{
-    // Default code to pass into encoding function.
-    char code[] = "???";
-
-    // Loop over every possible infection and death outcome.
-
-    for (unsigned int infections=0; infections <= 99; infections++)
-    {
-        for (unsigned int deaths=0; deaths <= infections; deaths++)
-        {
-
-            encode(infections, deaths, code);
-
-            std::cout << infections << "\t" << deaths << "\t" << code << "\n";
-
-        }
-    }
-
-    return 0;
 }
 
