@@ -20,7 +20,7 @@
     Created:	2017/04/11
 
     Purpose:	Fill a three character string with a code representing vaccinations, infections and deaths.
-    Inputs:	Output character string, player vaccination status, number of deaths & infections.
+    Inputs:     Output character string, player vaccination status, number of deaths & infections.
     Outputs:    Poxemon code, a three character string.
 
     Encoding vaccination status, infections and deaths into a single code is a two-step process.
@@ -83,7 +83,7 @@
  ******************************************************************************/
 
 
-void poxencode(bool bVaccinated, unsigned int infections, unsigned int deaths, char* output)
+void poxencode(bool bVaccinated, unsigned int infections, unsigned int deaths, char* const output)
 {
 
     // Calculate the triangle number of infections.
@@ -99,12 +99,12 @@ void poxencode(bool bVaccinated, unsigned int infections, unsigned int deaths, c
     if (bVaccinated)
     {
         // Use half the total values - 5324 - as our offset for vaccinated players,
-        code += 5324;
+        code += VACC_OFFSET;
     }
 
 
     // We only need 22 characters, so we drop all the vowels after 'A'.
-    char alphabet[] = "ABCDFGHJKLMNPQRSTVWXYZ";
+    char alphabet[] = ALPHABASE22;
 
     // With 22 characters, we're encoding in base 22.
     unsigned int base = int(strlen(alphabet));
