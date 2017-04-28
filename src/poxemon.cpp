@@ -48,8 +48,18 @@
     0 1 2 3  ...  97 98
     0 1 2 3  .... 97 98 99
  
-
-    ... then the number of items preceding the row at which 'N' infections start
+    ... we then can assign a unique number to each possible outcome:
+ 
+     0
+     1  2
+     3  4  5
+     6  7  8  9
+    10 11 12 13 14
+    15 16 17 18 19 20
+    21 22 23 24 25 26 27 
+    28 ....
+ 
+    ... and trivially calculate its value, since the first value in infection row 'N'
     is the triangle number of 'N'.
 
     https://en.wikipedia.org/wiki/Triangular_number
@@ -76,8 +86,8 @@
 
     (See poxemon.csv for the complete list).
 
-    The outcome number can be readily calculated by adding the triangle number of infections to
-    the number of death reports.
+    This means the outcome number can be readily calculated simply by adding 
+    the triangle number of infections to the number of death reports.
 
     If the player is vaccinated, we use exactly the same system, but start numbering
     outcomes with a value greater than 5049.
@@ -94,7 +104,7 @@
 
     If we use half the total values - 5324 - as our offset for vaccinated players,
     their encoding starts on a nice round number - 'NAA' - which also means that
-    unvaccinated codes start with 'A-M', and vaccinated with 'N-Z':
+    unvaccinated codes always start with 'A-M', and vaccinated with 'N-Z':
  
  
     Infections    Deaths     Outcome    Infected  Protected
