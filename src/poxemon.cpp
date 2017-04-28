@@ -94,8 +94,28 @@
 
     If we use half the total values - 5324 - as our offset for vaccinated players,
     their encoding starts on a nice round number - 'NAA' - which also means that
-    unvaccinated codes start with 'A-M', and vaccinated with 'N-Z'.
+    unvaccinated codes start with 'A-M', and vaccinated with 'N-Z':
+ 
+ 
+    Infections    Deaths     Outcome    Infected  Protected
+         0           0           0         AAA       NAA
+         1           0           1         AAB       NAB
+         1           1           2         AAC       NAC
+         2           0           3         AAD       NAD
+         2           1           4         AAF       NAF
+         2           2           5         AAG       NAG
+         3           0           6         AAH       NAH
+         3           1           7         AAJ       NAJ
+             ...         ...
+        99          96          5046       MLK       ZLK
+        99          97          5047       MLL       ZLL
+        99          98          5048       MLM       ZLM
+        99          99          5049       MLN       ZLN
 
+    By algorithmically generating these codes we avoid the need for huge lookup
+    tables, and by using triangle numbers we have a simple way to convert the
+    encoded outcome back into its discrete infection and death counts.
+ 
  ******************************************************************************/
 
 
