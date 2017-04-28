@@ -29,28 +29,33 @@
 
     Calculate the 'outcome' number.
 
-    For each infection N, N+1 deaths are possible, giving N(N+1)/2 possible outcomes.
+    With N infections, the number of possible deaths is N+1, since the death count can range
+    from zero (no-one dies) to N (everyone dies).
 
-    So with 0 to 99 possible infections, there are 5050 possible outcomes:
+    For example, 5 infections can produce 6 possible death counts: 0, 1, 2, 3, 4, or 5.
+ 
+    It can be seen that for up to N infections, there are N(N+1)/2 possible outcomes.
+ 
+    So with a range of 0 to 99 possible infections, there are 5050 possible outcomes:
 
     Infections    Deaths    Outcome
-    0           0           0
-    1           0           1
-    1           1           2
-    2           0           3
-    2           1           4
-    2           2           5
-    3           0           6
-    3           1           7
-    ...         ...
-    99          96          5046
-    99          97          5047
-    99          98          5048
-    99          99          5049
+        0           0           0
+        1           0           1
+        1           1           2
+        2           0           3
+        2           1           4
+        2           2           5
+        3           0           6
+        3           1           7
+            ...         ...
+        99          96          5046
+        99          97          5047
+        99          98          5048
+        99          99          5049
 
     (See poxemon.csv for the complete list).
 
-    If we arrange the number of deaths in a triangle, with one row per infection ...
+    If we arrange the possible death counts in a triangle, with one row per infection ...
 
     0
     0 1
@@ -66,14 +71,16 @@
 
     ... then the row at which 'N' infections start is the triangle number of 'N'.
 
-    This means the outcome number is simply the row number + number of infections.
+    This means the outcome number is simply the triangle number of infections PLUS
+    the number of death reports.
 
-    If the player is vaccinated, we start the outcome numbering at a value greater than 5049.
+    If the player is vaccinated, we use exactly the same system, but start numbering
+    outcomes with a value greater than 5049.
 
     STEP 2:
 
-    By encoding the outcome number in a higher base, we allow each of the 10100
-    possibilites to be represented with just three characters.
+    By encoding the outcome number in a higher base, each of the 10100 possibilites
+    can to be represented with just three characters.
 
     Since 22^3 = 10648, we can represent all our outcome values using base 22.
 
