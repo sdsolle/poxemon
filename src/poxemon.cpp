@@ -34,7 +34,28 @@
 
     For example, 5 infections can produce 6 possible death counts: 0, 1, 2, 3, 4, or 5.
  
-    It can be seen that for up to N infections, there are N(N+1)/2 possible outcomes.
+    If we arrange the possible death counts in a triangle, with one row per infection ...
+ 
+    0
+    0 1
+    0 1 2
+    0 1 2 3
+    0 1 2 3 4
+    0 1 2 3 4 5
+    ...
+ 
+    0 1 2 3  ..   97
+    0 1 2 3  ...  97 98
+    0 1 2 3  .... 97 98 99
+ 
+
+    ... then the number of items preceding the row at which 'N' infections start
+    is the triangle number of 'N'.
+
+    https://en.wikipedia.org/wiki/Triangular_number
+
+    Since the triangle number of N has the value N(N+1)/2, it can be seen that for
+    up to N infections, there are N(N+1)/2 possible outcomes.
  
     So with a range of 0 to 99 possible infections, there are 5050 possible outcomes:
 
@@ -55,23 +76,7 @@
 
     (See poxemon.csv for the complete list).
 
-    If we arrange the possible death counts in a triangle, with one row per infection ...
-
-    0
-    0 1
-    0 1 2
-    0 1 2 3
-
-    ...
-
-    0 1 2 3  ..   97
-    0 1 2 3  ...  97 98
-    0 1 2 3  .... 97 98 99
-
-
-    ... then the row at which 'N' infections start is the triangle number of 'N'.
-
-    This means the outcome number is simply the triangle number of infections PLUS
+    The outcome number can be readily calculated by adding the triangle number of infections to
     the number of death reports.
 
     If the player is vaccinated, we use exactly the same system, but start numbering
