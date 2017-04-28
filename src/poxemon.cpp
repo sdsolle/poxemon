@@ -80,12 +80,16 @@
     STEP 2:
 
     By encoding the outcome number in a higher base, each of the 10100 possibilites
-    can to be represented with just three characters.
+    can be represented with just three characters.
 
     Since 22^3 = 10648, we can represent all our outcome values using base 22.
+    
+    By dropping the vowels after 'A', we reduce our alphabet from base 26 to base 22,
+    allowing codes from 'AAA' to 'ZZZ'
 
     If we use half the total values - 5324 - as our offset for vaccinated players,
-    the encoding starts on a nice round number - 'NAA'.
+    their encoding starts on a nice round number - 'NAA' - which also means that
+    unvaccinated codes start with 'A-M', and vaccinated with 'N-Z'.
 
  ******************************************************************************/
 
