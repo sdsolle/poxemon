@@ -13,17 +13,20 @@
 
 /******************************************************************************
 
- void poxencode( bool bVaccinated,
- unsigned int infections,
- unsigned int deaths,
- char* output)
+ bool poxdecode( const char* const codestring,
+ bool& bVaccinated,
+ unsigned int& infections,
+ unsigned int& deaths,
+ unsigned int& code )
 
  Author:	Sean D. Sollé
  Created:	2017/04/27
 
  Purpose:	Decode a three character string representing vaccinations, infections and deaths back to those components.
- Inputs:	Character string
+ Inputs:	Code string
  Outputs:   Player vaccination status, number of deaths & infections, integer value outcome.
+
+ Returns:   true if decoding successful.
 
  ******************************************************************************/
 
