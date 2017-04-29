@@ -91,8 +91,16 @@ bool poxdecode(const char* const codestring, bool& bVaccinated, unsigned int& in
     return true;
 }
 
+/******************************************************************************
 
-int main(int argc, const char * argv[])
+ int TestAllOutcomes()
+
+ Author:	Sean D. Sollé
+ Created:	2017/04/28
+
+ ******************************************************************************/
+
+int TestAllOutcomes()
 {
     // Default code to pass into encoding function.
     char code[] = "???";
@@ -142,7 +150,77 @@ int main(int argc, const char * argv[])
             std::cout << "\n";
         }
     }
-    
+
+    // Everything worked fine.
     return 0;
 }
 
+/******************************************************************************
+
+ int main(int argc, const char * argv[])
+
+ Author:	Sean D. Sollé
+ Created:	2017/04/11
+
+ ******************************************************************************/
+
+
+int main(int argc, const char * argv[])
+{
+    // Default code to pass into encoding function.
+    char code[] = "???";
+
+    unsigned int infections, deaths, outcome;
+    bool vaccinated = false;
+
+    // Subtracting one to ignore the system-supplied default,
+    // how many argugments have been passed?
+    switch (argc-1)
+    {
+            // Single paramater passed - assume it's a three-letter code to decode.
+        case 1:
+        {
+            // Copy the first three letters from user input to the code string as upper case.
+            code[0] = toupper(argv[1][0]);
+            code[1] = toupper(argv[1][1]);
+            code[2] = toupper(argv[1][2]);
+
+
+            if (!poxdecode(code, vaccinated, infections, deaths, outcome))
+            {
+                std::cout << "Sorry, couldn't decode " << code << "\n\n";
+                return -1;
+            }
+
+            break;
+        }
+
+            // Three params - deaths, infections, vaccinated.
+        case 3:
+        {
+            vaccinated = true;
+        }
+
+            // Three params falls through to here.
+        case 2:
+        {
+            infections = atoi(argv[1]);
+            deaths = atoi(argv[2]);
+
+            poxencode(vaccinated, infections, deaths, code);
+            break;
+        }
+
+            // Any other values, assume we want to test all params.
+        default:
+        {
+            return TestAllOutcomes();
+        }
+
+    }
+
+    std::cout << "I/P\tDeaths\tVacc?\tCode\n";
+    std::cout << infections << '\t' << deaths  << '\t' << vaccinated << '\t' << code << "\n\n";
+
+    return 0;
+}
