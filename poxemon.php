@@ -59,22 +59,22 @@ $vaccinated = false;
 // We must be explicity passed a code as a parameter (we're no longer relying on being embedded in a Blogger URL).
 if ( isset($_REQUEST['code']) && !empty($_REQUEST['code']))
 {
-	// We force to an integer to strip any prefixed zero(s).
-	$code = intval($_REQUEST['code']);
+    // We force to an integer to strip any prefixed zero(s).
+    $code = intval($_REQUEST['code']);
 }
 
 // ... and check it's within range.
 if ( $code < 1 || $code > 100)
 {
-        // Code supplied is out of range - redirect to error page.
-         Header("Location: BadCodeError.html");
-         exit;
+    // Code supplied is out of range - redirect to error page.
+    Header("Location: BadCodeError.html");
+    exit;
 }
 
 // Have we been explicity passed vaccination status?
 if ( isset($_REQUEST['vaccinated']) && !empty($_REQUEST['vaccinated']))
 {
-	$vaccinated = $_REQUEST['vaccinated'];
+    $vaccinated = $_REQUEST['vaccinated'];
 }
 
 // Let's do some grammar ;)
@@ -86,9 +86,9 @@ $caught = "caught";
 
 if ($vaccinated)
 {
-	$collection = "Protection";
-	$choice = "";
-	$caught = "did not catch";
+    $collection = "Protection";
+    $choice = "";
+    $caught = "did not catch";
 }
 
 echo "<h2>This is your ".$collection." Collection.</h2>\n";
@@ -112,15 +112,15 @@ sort($deck);
 // Deal the cards.
 foreach ($deck as &$pick)
 {
-	$card = $nanostories[$pick];
+    $card = $nanostories[$pick];
 
-	echo "<!-- ".$pick." --->\n";
+    echo "<!-- ".$pick." --->\n";
 
-	echo "<div id='roundrect'>\n";
-	echo "<img src='/png/".$card[1]."' /><br/>\n";
-	echo "<h2>".$card[0]."</h2>\n";
-	echo "<i>".$card[2]."</i></br>\n";
-	echo "</div>\n\n";
+    echo "<div id='roundrect'>\n";
+    echo "<img src='/png/".$card[1]."' /><br/>\n";
+    echo "<h2>".$card[0]."</h2>\n";
+    echo "<i>".$card[2]."</i></br>\n";
+    echo "</div>\n\n";
 }
 
 ?>
