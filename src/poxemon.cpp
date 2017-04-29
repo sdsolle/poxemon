@@ -33,9 +33,9 @@
     from zero (no-one dies) to N (everyone dies).
 
     For example, 5 infections can produce 6 possible death counts: 0, 1, 2, 3, 4, or 5.
- 
+
     If we arrange the possible death counts in a triangle, with one row per infection ...
- 
+
     0
     0 1
     0 1 2
@@ -43,13 +43,13 @@
     0 1 2 3 4
     0 1 2 3 4 5
     ...
- 
+
     0 1 2 3  ..   97
     0 1 2 3  ...  97 98
     0 1 2 3  .... 97 98 99
- 
+
     ... we then can assign a unique number to each possible outcome:
- 
+
      0
      1  2
      3  4  5
@@ -58,7 +58,7 @@
     15 16 17 18 19 20
     21 22 23 24 25 26 27 
     28 ....
- 
+
     ... and trivially calculate its value, since the first value in infection row 'N'
     is the triangle number of 'N'.
 
@@ -66,7 +66,7 @@
 
     Since the triangle number of N has the value N(N+1)/2, it can be seen that for
     up to N infections, there are N(N+1)/2 possible outcomes.
- 
+
     So with a range of 0 to 99 possible infections, there are 5050 possible outcomes:
 
     Infections    Deaths    Outcome
@@ -105,8 +105,8 @@
     If we use half the total values - 5324 - as our offset for vaccinated players,
     their encoding starts on a nice round number - 'NAA' - which also means that
     unvaccinated codes always start with 'A-M', and vaccinated with 'N-Z':
- 
- 
+
+
     Infections    Deaths     Outcome    Infected  Protected
          0           0           0         AAA       NAA
          1           0           1         AAB       NAB
@@ -125,7 +125,7 @@
     By algorithmically generating these codes we avoid the need for huge lookup
     tables, and by using triangle numbers we have a simple way to convert the
     encoded outcome back into its discrete infection and death counts.
- 
+
  ******************************************************************************/
 
 
