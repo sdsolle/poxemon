@@ -61,6 +61,13 @@ if ( isset($_REQUEST['code']) && !empty($_REQUEST['code']))
 {
     // We force to an integer to strip any prefixed zero(s).
     $infections = intval($_REQUEST['code']);
+
+    // Have we been explicity passed vaccination status?
+    // (Vaccinated paramater only makes sense if we've also been passed a code)
+    if ( isset($_REQUEST['vaccinated']) && !empty($_REQUEST['vaccinated']))
+    {
+        $vaccinated = $_REQUEST['vaccinated'];
+    }
 }
 
 // ... and check it's within range.
@@ -69,12 +76,6 @@ if ( $infections < 1 || $infections > 100)
     // Code supplied is out of range - redirect to error page.
     Header("Location: BadCodeError.html");
     exit;
-}
-
-// Have we been explicity passed vaccination status?
-if ( isset($_REQUEST['vaccinated']) && !empty($_REQUEST['vaccinated']))
-{
-    $vaccinated = $_REQUEST['vaccinated'];
 }
 
 // Let's do some grammar ;)
