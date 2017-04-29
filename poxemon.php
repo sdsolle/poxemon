@@ -7,6 +7,8 @@
 <style>
 body
 {
+    background-color: black;
+    color: white;
     font-family: 'Jura', sans-serif;
     text-align: center;
     width: 576px;
@@ -15,18 +17,20 @@ body
 #header
 {
     position:relative;
-    height: 400px;
+    height: 480px;
 }
 #intro
 {
-    width: 510px;
+width: 510px;
     padding-left: 28px;
     padding-right: 28px;
-    position:absolute;
-    bottom:0;
+position:absolute;
+bottom:0;
 }
-#roundrect
+.roundrect
 {
+    background-color: white;
+    color: black;
     width: 420px;
     border-radius: 25px;
     border: 2px solid;
@@ -35,6 +39,11 @@ body
     margin-left: auto;
     margin-right: auto;
 }
+.deadrect
+{
+    background-color: #c0c0c0;
+}
+
 </style>
 </head>
 <body>
@@ -123,7 +132,7 @@ foreach ($deck as &$pick)
 
     echo "<!-- ".$pick." --->\n";
 
-    echo "<div id='roundrect'>\n";
+    echo "<div class='roundrect'>\n";
     echo "<img src='/png/".$card[1]."' /><br/>\n";
     echo "<h2>".$card[0]."</h2>\n";
     echo "<i>".$card[2]."</i></br>\n";
