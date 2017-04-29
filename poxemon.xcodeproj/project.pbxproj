@@ -28,6 +28,7 @@
 		141DACA01EB2391E0053B8DD /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		14679B391EB23C3400E816ED /* poxemon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = poxemon.cpp; sourceTree = "<group>"; };
 		14679B3A1EB23C3400E816ED /* poxemon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = poxemon.h; sourceTree = "<group>"; };
+		14EB04451EBAAB5800087AD8 /* poxemon.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; path = poxemon.php; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -44,6 +45,7 @@
 		141DAC941EB2391E0053B8DD = {
 			isa = PBXGroup;
 			children = (
+				14EB04451EBAAB5800087AD8 /* poxemon.php */,
 				141DAC9F1EB2391E0053B8DD /* src */,
 				141DAC9E1EB2391E0053B8DD /* Products */,
 			);
@@ -68,6 +70,22 @@
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
+
+/* Begin PBXLegacyTarget section */
+		14EB04411EBAAB1B00087AD8 /* Poxemon PHP website */ = {
+			isa = PBXLegacyTarget;
+			buildArgumentsString = "$(ACTION)";
+			buildConfigurationList = 14EB04441EBAAB1B00087AD8 /* Build configuration list for PBXLegacyTarget "Poxemon PHP website" */;
+			buildPhases = (
+			);
+			buildToolPath = /Users/sean/Projects/envvars/DerivedData/envvars/Build/Products/Debug/envvars;
+			dependencies = (
+			);
+			name = "Poxemon PHP website";
+			passBuildSettingsInEnvironment = 1;
+			productName = "Poxemon PHP website";
+		};
+/* End PBXLegacyTarget section */
 
 /* Begin PBXNativeTarget section */
 		141DAC9C1EB2391E0053B8DD /* poxemon */ = {
@@ -100,6 +118,10 @@
 						CreatedOnToolsVersion = 8.2.1;
 						ProvisioningStyle = Automatic;
 					};
+					14EB04411EBAAB1B00087AD8 = {
+						CreatedOnToolsVersion = 8.2.1;
+						ProvisioningStyle = Automatic;
+					};
 				};
 			};
 			buildConfigurationList = 141DAC981EB2391E0053B8DD /* Build configuration list for PBXProject "poxemon" */;
@@ -115,6 +137,7 @@
 			projectRoot = "";
 			targets = (
 				141DAC9C1EB2391E0053B8DD /* poxemon */,
+				14EB04411EBAAB1B00087AD8 /* Poxemon PHP website */,
 			);
 		};
 /* End PBXProject section */
@@ -233,6 +256,29 @@
 			};
 			name = Release;
 		};
+		14EB04421EBAAB1B00087AD8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEBUGGING_SYMBOLS = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		14EB04431EBAAB1B00087AD8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -253,6 +299,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		14EB04441EBAAB1B00087AD8 /* Build configuration list for PBXLegacyTarget "Poxemon PHP website" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				14EB04421EBAAB1B00087AD8 /* Debug */,
+				14EB04431EBAAB1B00087AD8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};
