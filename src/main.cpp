@@ -53,7 +53,7 @@ bool poxdecode(const char* const codestring, bool& bVaccinated, unsigned int& in
         // Look for the input character in our alphabet.
         char* pFound = strchr(alphabet,codestring[index]);
 
-        if (pFound <0)
+        if (pFound == NULL)
         {
             // Character not in alphabet - exit.
             return false;
