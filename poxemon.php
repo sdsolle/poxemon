@@ -21,11 +21,11 @@ body
 }
 #intro
 {
-width: 510px;
+    width: 510px;
     padding-left: 28px;
     padding-right: 28px;
-position:absolute;
-bottom:0;
+    position:absolute;
+    bottom:0;
 }
 .roundrect
 {
@@ -60,6 +60,7 @@ error_reporting(-1);
 
 // By default we've no infections, and we don't know the vaccination status.
 $infections = 0;
+$deaths = 0;
 $vaccinated = false;
 
 // The first set will be numbered with three digits, 001 to 099, for people who chose the vaccine option
@@ -99,16 +100,24 @@ $people = ($infections < 2) ? "this 1 person" : "these ".$infections." people";
 $collection = "Infection";
 $choice = " not ";
 $caught = "caught";
+$died = "died from the disease.";
 
 if ($vaccinated)
 {
     $collection = "Protection";
     $choice = "";
     $caught = "did not catch";
+    $died = "would have died.";
 }
 
 echo "<h2>This is your ".$collection." Collection.</h2>\n";
 echo "<h2>Because you chose ".$choice."to get immunized, ".$people." in your community ".$caught." the shadowpox virus from you.</h2>\n";
+
+if ($deaths > 0)
+{
+    echo "<h2>The ".$deaths." with a darker background ".$died."</h2>";
+}
+
 echo "<h3>Scroll down to the bottom of the page to add your own Shadowpox character.</h3>\n";
 echo "</div>\n";
 echo "</div>\n";
@@ -121,8 +130,13 @@ $count = count($nanostories);
 $deck = range(0, $count-1);
 shuffle($deck);
 
-// Take the first N cards, then sort in order.
+// Take the first N cards
 $deck = array_slice($deck, 0, $infections);
+
+// From this deck, create a smaller deck holding one card per death.
+$dead = array_slice($deck, 0, $deaths);
+
+// Sort the infections deck in order.
 sort($deck);
 
 // Deal the cards.
@@ -132,7 +146,10 @@ foreach ($deck as &$pick)
 
     echo "<!-- ".$pick." --->\n";
 
-    echo "<div class='roundrect'>\n";
+    // We need to add an extra class if the current card is dead.
+    $class = in_array($pick, $dead, true) ? " deadrect" : "";
+
+    echo "<div class='roundrect".$class."'>\n";
     echo "<img src='/png/".$card[1]."' /><br/>\n";
     echo "<h2>".$card[0]."</h2>\n";
     echo "<i>".$card[2]."</i></br>\n";
