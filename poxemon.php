@@ -49,8 +49,8 @@ body
 // Report all PHP errors
 error_reporting(-1);
 
-// By default we've no code, and we don't know the vaccination status.
-$code = 0;
+// By default we've no infections, and we don't know the vaccination status.
+$infections = 0;
 $vaccinated = false;
 
 // The first set will be numbered with three digits, 001 to 099, for people who chose the vaccine option
@@ -60,11 +60,11 @@ $vaccinated = false;
 if ( isset($_REQUEST['code']) && !empty($_REQUEST['code']))
 {
     // We force to an integer to strip any prefixed zero(s).
-    $code = intval($_REQUEST['code']);
+    $infections = intval($_REQUEST['code']);
 }
 
 // ... and check it's within range.
-if ( $code < 1 || $code > 100)
+if ( $infections < 1 || $infections > 100)
 {
     // Code supplied is out of range - redirect to error page.
     Header("Location: BadCodeError.html");
@@ -78,7 +78,7 @@ if ( isset($_REQUEST['vaccinated']) && !empty($_REQUEST['vaccinated']))
 }
 
 // Let's do some grammar ;)
-$people = ($code < 2) ? "this 1 person" : "these ".$code." people";
+$people = ($infections < 2) ? "this 1 person" : "these ".$infections." people";
 
 $collection = "Infection";
 $choice = " not ";
@@ -106,7 +106,7 @@ $deck = range(0, $count-1);
 shuffle($deck);
 
 // Take the first N cards, then sort in order.
-$deck = array_slice($deck, 0, $code);
+$deck = array_slice($deck, 0, $infections);
 sort($deck);
 
 // Deal the cards.
