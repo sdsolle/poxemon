@@ -28,6 +28,7 @@
 		141DACA01EB2391E0053B8DD /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		14679B391EB23C3400E816ED /* poxemon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = poxemon.cpp; sourceTree = "<group>"; };
 		14679B3A1EB23C3400E816ED /* poxemon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = poxemon.h; sourceTree = "<group>"; };
+		14C631A01EBBE04F0026E0FD /* .htaccess */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .htaccess; sourceTree = "<group>"; };
 		14EB04451EBAAB5800087AD8 /* poxemon.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; path = poxemon.php; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -45,6 +46,7 @@
 		141DAC941EB2391E0053B8DD = {
 			isa = PBXGroup;
 			children = (
+				14C631A01EBBE04F0026E0FD /* .htaccess */,
 				14EB04451EBAAB5800087AD8 /* poxemon.php */,
 				141DAC9F1EB2391E0053B8DD /* src */,
 				141DAC9E1EB2391E0053B8DD /* Products */,
@@ -307,6 +309,7 @@
 				14EB04431EBAAB1B00087AD8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

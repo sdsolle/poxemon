@@ -70,7 +70,13 @@ if ( isset($_REQUEST['code']) && !empty($_REQUEST['code']))
     }
 }
 
-// ... and check it's within range.
+// The third set uses three letters - AAA to ZZZ - and encodes infections, deaths and vaccination status.
+if ( isset($_REQUEST['tla']) && !empty($_REQUEST['tla']))
+{
+    list($infections, $deaths, $vaccinated) = decode($_REQUEST['tla']);
+}
+
+// Is the infection count is within range?
 if ( $infections < 1 || $infections > 100)
 {
     // Code supplied is out of range - redirect to error page.
@@ -122,6 +128,59 @@ foreach ($deck as &$pick)
     echo "<h2>".$card[0]."</h2>\n";
     echo "<i>".$card[2]."</i></br>\n";
     echo "</div>\n\n";
+}
+
+exit;
+
+function decode($code)
+{
+    // Poxemon custom base 22 alphabet vs normal, starts-from-zero base 22 alphabet.
+    $src = array('A','B','C','D','F','G','H','J','K','L','M','N','P','Q','R','S','T','V','W','X','Y','Z');
+    $dst = array('0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f','g','h','i','j','k','l');
+
+    $len = strlen($code);
+
+    // Check if we've been passed a non-TLA code.
+    if ($len<2 || $len>3 || str_replace($src, "", $code))
+    {
+        // There are non-alphabet characters here
+        return array(-1,-1,-1);
+    }
+
+    // Normalise alphabet
+    $code = str_replace($src, $dst, $code);
+
+    // Convert from base 22 to binary.
+    $code = intval($code, 22);
+
+    // ... and check it's within range.
+    if ( $code < 0 || $code > 10648)
+    {
+        return array(-1,-1,-1);
+    }
+
+    // By default we don't know the vaccination status.
+    $vaccinated = false;
+
+    if ($code >= 5324)
+    {
+        // Reset to counting-from-zero.
+        $code-= 5324;
+
+        // Player is vaccinated.
+        $vaccinated = true;
+    }
+
+    // The infection number is the row with the nearest triangle number to our code.
+    $infections = intval((sqrt(8*$code + 1) - 1)/2);
+
+    // Re-calculate the nearest triangle number from the row.
+    $triangle = intval(($infections * ($infections + 1)) / 2);
+
+    // The triangle number is the row we're starting at, and the deaths are the offset into that row.
+    $deaths = $code - $triangle;
+
+    return array($infections, $deaths, $vaccinated);
 }
 
 ?>
