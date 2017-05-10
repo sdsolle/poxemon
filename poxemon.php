@@ -39,7 +39,7 @@ body
     margin-left: auto;
     margin-right: auto;
 }
-.deadrect
+.dead
 {
     background-color: #c0c0c0;
 }
@@ -147,7 +147,7 @@ foreach ($deck as &$pick)
     echo "<!-- ".$pick." --->\n";
 
     // We need to add an extra class if the current card is dead.
-    $class = in_array($pick, $dead, true) ? " deadrect" : "";
+    $class = in_array($pick, $dead, true) ? " dead" : "";
 
     echo "<div class='roundrect".$class."'>\n";
     echo "<img src='/png/".$card[1]."' /><br/>\n";
