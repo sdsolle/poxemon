@@ -142,7 +142,8 @@ sort($deck);
 // Deal the cards.
 foreach ($deck as &$pick)
 {
-    $card = $nanostories[$pick];
+    // Extract our content with meaningful names.
+    list($name, $img, $story) = $nanostories[$pick];
 
     echo "<!-- ".$pick." --->\n";
 
@@ -150,9 +151,13 @@ foreach ($deck as &$pick)
     $class = in_array($pick, $dead, true) ? " dead" : "";
 
     echo "<div class='roundrect".$class."'>\n";
-    echo "<img src='/png/".$card[1]."' /><br/>\n";
-    echo "<h2>".$card[0]."</h2>\n";
-    echo "<i>".$card[2]."</i></br>\n";
+
+
+    // Output image, name and nanostory.
+    echo "<img src='/png/".$img."' /><br/>\n";
+    echo "<h2>".$name."</h2>\n";
+    echo "<i>".$story."</i></br>\n";
+
     echo "</div>\n\n";
 }
 
