@@ -139,24 +139,24 @@ $dead = array_slice($deck, 0, $deaths);
 // Sort the infections deck in order.
 sort($deck);
 
-    // Deal the cards.
-    foreach ($deck as &$pick)
-    {
-        // Extract our content with meaningful names.
-        list($name, $img, $story) = $nanostories[$pick];
+// Deal the cards.
+foreach ($deck as &$pick)
+{
+    // Extract our content with meaningful names.
+    list($name, $img, $story) = $nanostories[$pick];
 
-        // We need to add an extra class if the current card is dead.
-        $class = in_array($pick, $dead, true) ? " dead" : "";
+    // We need to add an extra class if the current card is dead.
+    $class = in_array($pick, $dead, true) ? " dead" : "";
 
-        echo "<div id='".$name."' class='roundrect".$class."'>\n";
+    echo "<div id='".$name."' class='roundrect".$class."'>\n";
 
-        // Output image, name and nanostory.
-        echo "<img src='/png/".$img."' id='img".sprintf("%02d", $pick)."'/><br/>\n";
-        echo "<h2>".$name."</h2>\n";
-        echo "<i>".$story."</i></br>\n";
-        
-        echo "</div>\n\n";
-    }
+    // Output image, name and nanostory.
+    echo "<img src='/png/".$img."' id='img".sprintf("%02d", $pick)."'/><br/>\n";
+    echo "<h2>".$name."</h2>\n";
+    echo "<i>".$story."</i></br>\n";
+    
+    echo "</div>\n\n";
+}
 
 exit;
 
