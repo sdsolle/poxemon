@@ -136,8 +136,17 @@ $deck = array_slice($deck, 0, $infections);
 // From this deck, create a smaller deck holding one card per death.
 $dead = array_slice($deck, 0, $deaths);
 
+// Remove the dead cards from the deck.
+$deck = array_diff($deck, $dead);
+
 // Sort the infections deck in order.
 sort($deck);
+
+// Sort the dead cards in order.
+sort($dead);
+
+// Add the dead cards back to the bottom of the deck.
+$deck = array_merge($deck, $dead);
 
 // Deal the cards.
 foreach ($deck as &$pick)
