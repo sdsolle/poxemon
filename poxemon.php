@@ -167,6 +167,8 @@ foreach ($deck as &$pick)
     echo "</div>\n\n";
 }
 
+echo '<br/><br/><iframe class="roundrect" src="https://docs.google.com/forms/d/e/1FAIpQLSd7-jRJjHG2e22YP1crQKw6nXTcnfefL63Gyi2t3oJzjQPlxg/viewform?embedded=true" width="400" height="1200" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe></div></body></html>';
+
 exit;
 
 function decode($code)
@@ -221,7 +223,4 @@ function decode($code)
 }
 
 ?>
-<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSd7-jRJjHG2e22YP1crQKw6nXTcnfefL63Gyi2t3oJzjQPlxg/viewform?embedded=true" width="400" height="1200" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
-</div>
-</body>
-</html>
+
