@@ -50,11 +50,24 @@ body
 <div id='container'>
 <div id='header'>
 <div id='anim'>
-<img src='/poxemon.gif' />
-</div>
-<div id='intro'>
 
 <?php
+
+// By default, the graphic links to the root of the website.
+$url = "/";
+
+// But in kiosk mode, we link back to the kiosk page.
+$kiosk_url = "http://".$_SERVER['SERVER_NAME']."/kiosk.html";
+
+if ( isset($_SERVER["HTTP_REFERER"]) && $_SERVER["HTTP_REFERER"] == $kiosk_url )
+{
+    $url = $kiosk_url;
+}
+
+// Output the graphic header, and the intro div.
+echo "<a href='".$url."'>\n<img src='/poxemon.gif' />\n</a>\n</div>\n";
+echo "<div id='intro'>";
+
 // Report all PHP errors
 error_reporting(-1);
 
