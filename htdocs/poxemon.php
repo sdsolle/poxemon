@@ -103,7 +103,7 @@ if ( isset($_REQUEST['tla']) && !empty($_REQUEST['tla']))
 if ( $infections < 1 || $infections > 100)
 {
     // Code supplied is out of range - redirect to error page.
-    Header("Location: BadCodeError.html");
+    Header("Location: ".$url);
     exit;
 }
 
