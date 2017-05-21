@@ -59,7 +59,9 @@ $url = "/";
 // But in kiosk mode, we link back to the kiosk page.
 $kiosk_url = "http://".$_SERVER['SERVER_NAME']."/kiosk.html";
 
-if ( isset($_SERVER["HTTP_REFERER"]) && $_SERVER["HTTP_REFERER"] == $kiosk_url )
+$bIsKiosk = isset($_SERVER["HTTP_REFERER"]) && $_SERVER["HTTP_REFERER"] == $kiosk_url;
+
+if ( $bIsKiosk )
 {
     $url = $kiosk_url;
 }
@@ -173,7 +175,10 @@ foreach ($deck as &$pick)
     echo "<div id='".$name."' class='roundrect".$class."'>\n";
 
     // Output image, name and nanostory.
+    echo $bIsKiosk ? "<a href='".$url."'/>" : "";
     echo "<img src='/png/".$img."' id='img".sprintf("%02d", $pick)."'/><br/>\n";
+    echo $bIsKiosk ? "</a>" : "";
+
     echo "<h2>".$name."</h2>\n";
     echo "<i>".$story."</i></br>\n";
     
