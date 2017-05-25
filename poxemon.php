@@ -197,6 +197,9 @@ function decode($code)
 
     $len = strlen($code);
 
+    // Force to uppercase.
+    $code = strtoupper($code);
+
     // Check if we've been passed a non-TLA code.
     if ($len<2 || $len>3 || str_replace($src, "", $code))
     {
