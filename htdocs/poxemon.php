@@ -17,7 +17,7 @@ body
 #header
 {
     position:relative;
-    height: 480px;
+    height: 510px;
 }
 #intro
 {
@@ -196,6 +196,9 @@ function decode($code)
     $dst = array('0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f','g','h','i','j','k','l');
 
     $len = strlen($code);
+
+    // Force to uppercase.
+    $code = strtoupper($code);
 
     // Check if we've been passed a non-TLA code.
     if ($len<2 || $len>3 || str_replace($src, "", $code))
