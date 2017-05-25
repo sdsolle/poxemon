@@ -17,7 +17,7 @@ body
 #header
 {
     position:relative;
-    height: 480px;
+    height: 510px;
 }
 #intro
 {
