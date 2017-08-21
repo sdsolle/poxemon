@@ -213,8 +213,8 @@ function decode($code)
     // Convert from base 22 to binary.
     $code = intval($code, 22);
 
-    // ... and check it's within range.
-    if ( $code < 0 || $code > 10648)
+    // Sanity check - we can't have negative codes.
+    if ( $code < 0)
     {
         return array(-1,-1,-1);
     }
@@ -239,6 +239,22 @@ function decode($code)
 
     // The triangle number is the row we're starting at, and the deaths are the offset into that row.
     $deaths = $code - $triangle;
+
+    // Clip the infections (to allow URLs beyond ZLN to be used as examples in publications) ...
+
+    if ($infections > 99)
+    {
+        $infections = 99;
+    }
+
+    // ... and make sure the deaths don't exceed the infections!
+
+    if ($deaths > $infections)
+    {
+        $deaths = $infections;
+    }
+
+
 
     return array($infections, $deaths, $vaccinated);
 }
