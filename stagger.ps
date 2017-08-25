@@ -43,11 +43,6 @@ bind def
 }
 bind def
 
-/rg
-{
-    setrgbcolor
-}
-bind def
 
 % Actual rendering of figure.
 
@@ -56,25 +51,22 @@ bind def
 % Outer circle
 % ------------
 
-6.19 48.27 m
-16.27 61.42 35.12 63.91 48.27 53.83 c
-61.42 43.75 63.91 24.89 53.83 11.75 c
-43.75 -1.39 24.89 -3.88 11.75 6.19 c
--1.39 16.27 -3.88 35.12 6.19 48.27 c
+newpath
+30 30 30 0 360 arc
+h
 f
 
 % Subsequent objects are filled in white
 
-1 1 1 rg
+1 1 1 setrgbcolor
 
 % Circular head
 % -------------
 
-41.01 56.06 m
-43.62 54.78 44.70 51.62 43.42 49.01 c
-42.14 46.40 38.98 45.32 36.37 46.60 c
-33.76 47.89 32.68 51.05 33.96 53.66 c
-35.24 56.26 38.40 57.34 41.01 56.06 c
+newpath
+38.77 51.32 5.3 0 360 arc
+h
+f
 
 % Body
 % ----
