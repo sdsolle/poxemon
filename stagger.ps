@@ -2,7 +2,10 @@
 %% PostScript definition of Shadowpox staggering (sick) stick figure.
 
 %  Created by Sean D. Sollé on 2017/08/25
-%  Copyright (C) 2017 Sean D. Sollé. All rights reserved.
+%  PostScript code copyright (C) 2017 Sean D. Sollé. All rights reserved.
+%
+%  Original artwork by Geoffrey Cramm
+%  https://www.shutterstock.com/video/gallery/GCramm-780406/
 
 % Definitions for AI/EPS/PDF shorthand commands.
 
@@ -13,7 +16,6 @@
 /c { curveto } bind def
 
 % We draw circles with a single arc, not a collection of curves.
-
 /circle
 {
     newpath
@@ -23,25 +25,19 @@
 }
 bind def
 
-
-% Actual rendering of figure.
-
+% Actual rendering of figure begins here.
 5 5 scale
 
 % Outer circle
-
 30 30 30 circle
 
 % Subsequent objects are filled in white
-
 1 1 1 setrgbcolor
 
 % Circular head
-
-38.77 51.32 5.3 circle
+38.77 51.32 5.3 circle  %Figure's head.
 
 % Body
-
 28.60 5.43 m
 28.62 6.47 29.52 7.37 30.09 8.31 c
 30.71 9.32 31.23 10.32 31.67 11.11 c
