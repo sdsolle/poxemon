@@ -24,15 +24,12 @@ bind def
 }
 bind def
 
-/f
+/circle
 {
-    fill
-}
-bind def
-
-/h
-{
+    newpath
+    0 360 arc
     closepath
+    fill
 }
 bind def
 
@@ -42,33 +39,25 @@ bind def
 5 5 scale
 
 % Outer circle
-% ------------
 
-newpath
-30 30 30 0 360 arc
-h
-f
+30 30 30 circle
 
 % Subsequent objects are filled in white
 
 1 1 1 setrgbcolor
 
 % Circular head
-% -------------
 
-newpath
-38.77 51.32 5.3 0 360 arc
-h
-f
+38.77 51.32 5.3 circle
 
 % Body
-% ----
 
 35.58 33.83 m
 34.98 31.34 l
 36.14 28.71 l
 35.58 33.83 l
-h
+closepath
+
 28.60 5.43 m
 28.62 6.47 29.52 7.37 30.09 8.31 c
 30.71 9.32 31.23 10.32 31.67 11.11 c
@@ -97,7 +86,7 @@ h
 39.52 14.68 36.71 10.09 34.37 6.36 c
 33.80 5.43 33.03 3.86 32.23 3.38 c
 30.55 2.37 28.58 3.72 28.60 5.43 c
-h
-f
+closepath
+fill
 
 showpage
