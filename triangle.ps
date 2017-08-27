@@ -1,0 +1,37 @@
+%!
+%% Triangle of circles
+
+% Define a simple procedure to draw a filled circle of diameter 1.
+/circle
+{
+	newpath
+	0.5 0 360 arc 
+	closepath
+	fill
+} bind def
+
+% Move the origin slightly.
+10 10 translate
+5 5 scale
+
+%Render in black
+0 0 0 setrgbcolor
+
+% Our infections loop from 0 to 99 in increments of 1.
+0 1 99 
+{ 
+    /infections exch def
+
+    %deaths loop from 0 to {number of infections} in steps of one. 
+    0 1 infections 
+    { 
+        /deaths exch def 
+        infections deaths sub
+        99 infections sub
+        circle
+    } for 
+} for 
+
+
+showpage
+
