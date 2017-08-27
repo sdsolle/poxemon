@@ -5,17 +5,32 @@
 /circle
 {
 	newpath
-	0.5 0 360 arc 
+%	0.5 0 360 arc
+    moveto
+    show
 	closepath
-	fill
+%	stroke
 } bind def
 
 % Move the origin slightly.
 10 10 translate
 5 5 scale
 
-%Render in black
-0 0 0 setrgbcolor
+/Courier findfont
+[0.4 0 0 0.5 0 0]  makefont
+
+% Make it the current font
+setfont
+
+
+/ALPHABASE22 (ABCDFGHJKLMNPQRSTVWXYZ) def
+
+/code (***) def
+
+/units 0 def
+/tens 0 def
+/huns 0 def
+
 
 % Our infections loop from 0 to 99 in increments of 1.
 0 1 99 
@@ -25,11 +40,47 @@
     %deaths loop from 0 to {number of infections} in steps of one. 
     0 1 infections 
     { 
-        /deaths exch def 
-        infections deaths sub
+        /deaths exch def
+
+        code 2 ALPHABASE22 units get put
+        code 1 ALPHABASE22 tens get  put
+        code 0 ALPHABASE22 huns get  put
+
+        code
+
+        % Calculate the coordinates x = deaths, y = 99-infections …
+        % … and put them on the stack
+
+        deaths
         99 infections sub
+
+
         circle
-    } for 
+
+        % roll the odometer on
+
+        units 1 add dup
+        22 ge
+        {
+            tens 1 add dup
+            22 ge
+            {
+                huns 1 add
+                /huns def
+                pop
+                0
+            } if
+
+            /tens exch def
+            pop
+            0
+        } if
+        /units exch def
+
+
+
+
+    } for
 } for 
 
 
