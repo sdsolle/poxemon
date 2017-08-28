@@ -14,6 +14,10 @@ body
     width: 576px;
     margin: auto;
 }
+h2
+{
+    margin-top: 0;
+}
 #header
 {
     position:relative;
@@ -32,9 +36,14 @@ body
     background-color: white;
     color: black;
     width: 420px;
+    height: 624px;
     border-radius: 25px;
     border: 2px solid;
-    padding: 20px;
+    padding-bottom: 20px;
+    padding-top: 0px;
+    padding-left: 20px;
+    padding-right: 20px;
+
     margin-top: 20px;
     margin-left: auto;
     margin-right: auto;
