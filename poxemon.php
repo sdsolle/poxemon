@@ -56,11 +56,25 @@ h2
 </style>
 </head>
 <body>
+<?php
+
+// Load the nanostories
+$nanostories = array_map('str_getcsv', file("nanostories.csv"));
+
+// Are we just rendering a single card?
+if ( isset($_REQUEST['card']))
+{
+    deal($_REQUEST['card']-1, false);
+    echo '</body></html>';
+    exit;
+}
+
+// Rendering a deck of cards.
+echo <<< DIVS
 <div id='container'>
 <div id='header'>
 <div id='anim'>
-
-<?php
+DIVS;
 
 // By default, the graphic links to the root of the website.
 $url = "/";
@@ -146,8 +160,6 @@ echo "<h3>Scroll down to the bottom of the page to add your own Shadowpox charac
 echo "</div>\n";
 echo "</div>\n";
 
-// Load the nanostories
-$nanostories = array_map('str_getcsv', file("nanostories.csv"));
 $count = count($nanostories);
 
 // Create a shuffled deck, with one card for each nanostory.
@@ -175,11 +187,24 @@ $deck = array_merge($deck, $dead);
 // Deal the cards.
 foreach ($deck as &$pick)
 {
+    // We need to add an extra class if the current card is dead.
+    $bIsDead = in_array($pick, $dead, true);
+    deal($pick, $bIsDead);
+}
+    
+echo '<br/><br/><iframe class="roundrect" src="https://docs.google.com/forms/d/e/1FAIpQLSd7-jRJjHG2e22YP1crQKw6nXTcnfefL63Gyi2t3oJzjQPlxg/viewform?embedded=true" width="400" height="1200" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe></div></body></html>';
+
+exit;
+
+function deal($pick, $bIsDead)
+{
+    global $nanostories, $bIsKiosk, $url    ;
+
     // Extract our content with meaningful names.
     list($name, $img, $story) = $nanostories[$pick];
-
+    
     // We need to add an extra class if the current card is dead.
-    $class = in_array($pick, $dead, true) ? " dead" : "";
+    $class = $bIsDead ? " dead" : "";
 
     echo "<div id='".$name."' class='roundrect".$class."'>\n";
 
@@ -194,9 +219,6 @@ foreach ($deck as &$pick)
     echo "</div>\n\n";
 }
 
-echo '<br/><br/><iframe class="roundrect" src="https://docs.google.com/forms/d/e/1FAIpQLSd7-jRJjHG2e22YP1crQKw6nXTcnfefL63Gyi2t3oJzjQPlxg/viewform?embedded=true" width="400" height="1200" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe></div></body></html>';
-
-exit;
 
 function decode($code)
 {
