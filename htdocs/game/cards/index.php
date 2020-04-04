@@ -56,16 +56,6 @@ body
 // By default, the graphic links to the root of the website.
 $url = "/";
 
-// But in kiosk mode, we link back to the kiosk page.
-$kiosk_url = "http://".$_SERVER['SERVER_NAME']."/kiosk.html";
-
-$bIsKiosk = isset($_SERVER["HTTP_REFERER"]) && $_SERVER["HTTP_REFERER"] == $kiosk_url;
-
-if ( $bIsKiosk )
-{
-    $url = $kiosk_url;
-}
-
 // Output the graphic header, and the intro div.
 echo "<a href='".$url."'>\n<img src='/poxemon.gif' />\n</a>\n</div>\n";
 echo "<div id='intro'>";
@@ -76,30 +66,24 @@ error_reporting(-1);
 // By default we've no infections, and we don't know the vaccination status.
 $infections = 0;
 $deaths = 0;
-$vaccinated = false;
+$stayedhome = false;
 
-// The first set will be numbered with three digits, 001 to 099, for people who chose the vaccine option
-// The second set's URL codes use two digits, 01 to 99, for the people who chose not to be vaccinated.
 
-// We must be explicity passed a code as a parameter (we're no longer relying on being embedded in a Blogger URL).
-if ( isset($_REQUEST['code']) && !empty($_REQUEST['code']))
+// We must be explicity passed a card list as a parameter
+if ( isset($_REQUEST['cards']) && !empty($_REQUEST['cards']))
 {
-    // We force to an integer to strip any prefixed zero(s).
-    $infections = intval($_REQUEST['code']);
+	// Build the deck from the cards param passed in.
+	// Any elements beyond 100 are left in the 101th entry.
+	$cards = explode(',', $_REQUEST['cards'], 101);
+	$infections = count($cards);
 
-    // Have we been explicity passed vaccination status?
-    // (Vaccinated paramater only makes sense if we've also been passed a code)
-    if ( isset($_REQUEST['vaccinated']) && !empty($_REQUEST['vaccinated']))
+    // Have we been explicity passed stayed-at-home status?
+    if ( isset($_REQUEST['stayedhome']) && !empty($_REQUEST['stayedhome']))
     {
-        $vaccinated = $_REQUEST['vaccinated'];
+        $stayedhome = $_REQUEST['stayedhome'];
     }
 }
 
-// The third set uses three letters - AAA to ZZZ - and encodes infections, deaths and vaccination status.
-if ( isset($_REQUEST['tla']) && !empty($_REQUEST['tla']))
-{
-    list($infections, $deaths, $vaccinated) = decode($_REQUEST['tla']);
-}
 
 // Is the infection count is within range?
 if ( $infections < 1 || $infections > 100)
@@ -107,6 +91,27 @@ if ( $infections < 1 || $infections > 100)
     // Code supplied is out of range - redirect to error page.
     Header("Location: ".$url);
     exit;
+}
+
+// Count the deaths - they're negative numbers.
+$deaths = 0;
+
+
+for ($i = 0; $i < $infections; $i++)
+{
+	$deck[$i] = intval($cards[$i]);
+
+	if ($deck[$i]==0 or abs($deck[$i] > 100))
+	{
+    	// Code supplied is out of range - redirect to error page.
+    	Header("Location: ".$url);
+	    exit;
+	}
+
+	if ($deck[$i] < 0)
+	{
+		$deaths++;
+	}
 }
 
 // Let's do some grammar ;)
@@ -117,7 +122,7 @@ $choice = " not ";
 $caught = "caught";
 $died = "died from the disease.";
 
-if ($vaccinated)
+if ($stayedhome)
 {
     $collection = "Protection";
     $choice = "";
@@ -141,43 +146,21 @@ echo "</div>\n";
 $nanostories = array_map('str_getcsv', file("nanostories.csv"));
 $count = count($nanostories);
 
-// Create a shuffled deck, with one card for each nanostory.
-$deck = range(0, $count-1);
-shuffle($deck);
-
-// Take the first N cards
-$deck = array_slice($deck, 0, $infections);
-
-// From this deck, create a smaller deck holding one card per death.
-$dead = array_slice($deck, 0, $deaths);
-
-// Remove the dead cards from the deck.
-$deck = array_diff($deck, $dead);
-
-// Sort the infections deck in order.
-sort($deck);
-
-// Sort the dead cards in order.
-sort($dead);
-
-// Add the dead cards back to the bottom of the deck.
-$deck = array_merge($deck, $dead);
-
 // Deal the cards.
 foreach ($deck as &$pick)
 {
     // Extract our content with meaningful names.
-    list($name, $img, $story) = $nanostories[$pick];
+    list($name, $img, $story) = $nanostories[abs($pick)];
 
     // We need to add an extra class if the current card is dead.
-    $class = in_array($pick, $dead, true) ? " dead" : "";
+    $class = ($pick < 0) ? " dead" : "";
 
     echo "<div id='".$name."' class='roundrect".$class."'>\n";
 
     // Output image, name and nanostory.
-    echo $bIsKiosk ? "<a href='".$url."'/>" : "";
-    echo "<img src='/png/".$img."' id='img".sprintf("%02d", $pick)."'/><br/>\n";
-    echo $bIsKiosk ? "</a>" : "";
+//    echo $bIsKiosk ? "<a href='".$url."'/>" : "";
+    echo "<img src='/png/".$img."' id='img".sprintf("%02d", abs($pick))."'/><br/>\n";
+//    echo $bIsKiosk ? "</a>" : "";
 
     echo "<h2>".$name."</h2>\n";
     echo "<i>".$story."</i></br>\n";
@@ -188,76 +171,5 @@ foreach ($deck as &$pick)
 echo '<br/><br/><iframe class="roundrect" src="https://docs.google.com/forms/d/e/1FAIpQLSd7-jRJjHG2e22YP1crQKw6nXTcnfefL63Gyi2t3oJzjQPlxg/viewform?embedded=true" width="400" height="1200" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe></div></body></html>';
 
 exit;
-
-function decode($code)
-{
-    // Poxemon custom base 22 alphabet vs normal, starts-from-zero base 22 alphabet.
-    $src = array('A','B','C','D','F','G','H','J','K','L','M','N','P','Q','R','S','T','V','W','X','Y','Z');
-    $dst = array('0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f','g','h','i','j','k','l');
-
-    $len = strlen($code);
-
-    // Force to uppercase.
-    $code = strtoupper($code);
-
-    // Check if we've been passed a non-TLA code.
-    if ($len<2 || $len>3 || str_replace($src, "", $code))
-    {
-        // There are non-alphabet characters here
-        return array(-1,-1,-1);
-    }
-
-    // Normalise alphabet
-    $code = str_replace($src, $dst, $code);
-
-    // Convert from base 22 to binary.
-    $code = intval($code, 22);
-
-    // Sanity check - we can't have negative codes.
-    if ( $code < 0)
-    {
-        return array(-1,-1,-1);
-    }
-
-    // By default we don't know the vaccination status.
-    $vaccinated = false;
-
-    if ($code >= 5324)
-    {
-        // Reset to counting-from-zero.
-        $code-= 5324;
-
-        // Player is vaccinated.
-        $vaccinated = true;
-    }
-
-    // The infection number is the row with the nearest triangle number to our code.
-    $infections = intval((sqrt(8*$code + 1) - 1)/2);
-
-    // Re-calculate the nearest triangle number from the row.
-    $triangle = intval(($infections * ($infections + 1)) / 2);
-
-    // The triangle number is the row we're starting at, and the deaths are the offset into that row.
-    $deaths = $code - $triangle;
-
-    // Clip the infections (to allow URLs beyond ZLN to be used as examples in publications) ...
-
-    if ($infections > 99)
-    {
-        $infections = 99;
-    }
-
-    // ... and make sure the deaths don't exceed the infections!
-
-    if ($deaths > $infections)
-    {
-        $deaths = $infections;
-    }
-
-
-
-    return array($infections, $deaths, $vaccinated);
-}
-
 ?>
 
