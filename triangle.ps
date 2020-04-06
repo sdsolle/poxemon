@@ -1,0 +1,87 @@
+%!
+%% Triangle of codes
+
+% Define a simple procedure to show a piece of text at a given position
+/showat
+{
+	newpath
+    moveto
+    show
+	closepath
+} bind def
+
+% Move the origin slightly.
+10 10 translate
+5 5 scale
+
+/Courier findfont
+
+% Apply a matrix to give the font an 80% aspect ratio
+[0.4 0 0 0.5 0 0]  makefont
+
+% Make it the current font
+setfont
+
+% The 22 valid chars
+/ALPHABASE22 (ABCDFGHJKLMNPQRSTVWXYZ) def
+
+% Dummy TLA to be overwritten
+/code (***) def
+
+% Set the odometer to 000
+/units 0 def
+/tens 0 def
+/huns 0 def
+
+
+% Our infections loop from 0 to 99 in increments of 1.
+0 1 99 
+{ 
+    /infections exch def
+
+    % Deaths loop from 0 to {number of infections} in increments of 1.
+    0 1 infections
+    { 
+        /deaths exch def
+
+        code 2 ALPHABASE22 units get put
+        code 1 ALPHABASE22 tens get  put
+        code 0 ALPHABASE22 huns get  put
+
+        code
+
+        % Calculate the coordinates x = deaths, y = 99-infections …
+        % … and put them on the stack
+
+        deaths
+        99 infections sub
+
+        % plot the code
+        showat
+
+        % roll the odometer on
+
+        units 1 add dup
+        22 ge
+        {
+            tens 1 add dup
+            22 ge
+            {
+                huns 1 add
+                /huns def
+                pop
+                0
+            } if
+
+            /tens exch def
+            pop
+            0
+        } if
+        /units exch def
+
+    } for
+} for 
+
+
+showpage
+
