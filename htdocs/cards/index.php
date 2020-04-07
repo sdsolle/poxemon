@@ -1,3 +1,11 @@
+<?php
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS')
+{
+	// Just return headers if we've been passed an OPTIONS request.
+	exit;
+}
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -89,7 +97,8 @@ if ( isset($_REQUEST['cards']) && !empty($_REQUEST['cards']))
 if ( $infections < 1 || $infections > 100)
 {
     // Code supplied is out of range - redirect to error page.
-    Header("Location: ".$url);
+//    Header("Location: ".$url);
+    echo "<h2>Infections ".$infections." out of range</h2>";
     exit;
 }
 
@@ -103,8 +112,8 @@ for ($i = 0; $i < $infections; $i++)
 
 	if ($deck[$i]==0 or abs($deck[$i] > 100))
 	{
-    	// Code supplied is out of range - redirect to error page.
-    	Header("Location: ".$url);
+//    	Header("Location: ".$url);
+		echo "<h2>Card ".$deck[$i]." out of range</h2>";
 	    exit;
 	}
 
