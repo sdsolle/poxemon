@@ -22,6 +22,10 @@ body
     width: 576px;
     margin: auto;
 }
+a
+{
+	color: white;
+}
 #header
 {
     position:relative;
@@ -47,7 +51,7 @@ body
     margin-left: auto;
     margin-right: auto;
 }
-.dead
+.hospitalised
 {
     background-color: #c0c0c0;
 }
@@ -73,7 +77,7 @@ error_reporting(-1);
 
 // By default we've no infections, and we don't know the vaccination status.
 $infections = 0;
-$deaths = 0;
+$victims = 0;
 $stayedhome = false;
 
 
@@ -103,7 +107,7 @@ if ( $infections < 1 || $infections > 100)
 }
 
 // Count the deaths - they're negative numbers.
-$deaths = 0;
+$victims = 0;
 
 
 for ($i = 0; $i < $infections; $i++)
@@ -119,7 +123,7 @@ for ($i = 0; $i < $infections; $i++)
 
 	if ($deck[$i] < 0)
 	{
-		$deaths++;
+		$victims++;
 	}
 }
 
@@ -129,25 +133,25 @@ $people = ($infections < 2) ? "this 1 person" : "these ".$infections." people";
 $collection = "Infection";
 $choice = " not ";
 $caught = "caught";
-$died = "died from the disease.";
+$hospitalised = "needed hospital care.";
 
 if ($stayedhome)
 {
     $collection = "Protection";
     $choice = "";
     $caught = "did not catch";
-    $died = "would have died.";
+    $hospitalised = "would have ".$hospitalised;
 }
 
 echo "<h2>This is your ".$collection." Collection.</h2>\n";
-echo "<h2>Because you chose ".$choice."to get immunized, ".$people." in your community ".$caught." the shadowpox virus from you.</h2>\n";
+echo "<h2>Because you chose ".$choice."to stay home, ".$people." in your community ".$caught." the shadowpox virus from you.</h2>\n";
 
-if ($deaths > 0)
+if ($victims > 0)
 {
-    echo "<h2>The ".$deaths." with a darker background ".$died."</h2>";
+    echo "<h2>The ".$victims." with a darker background ".$hospitalised."</h2>";
 }
 
-echo "<h3>Scroll down to the bottom of the page to add your own Shadowpox character.</h3>\n";
+//echo "<h3>Scroll down to the bottom of the page to add your own Shadowpox character.</h3>\n";
 echo "</div>\n";
 echo "</div>\n";
 
@@ -161,8 +165,8 @@ foreach ($deck as &$pick)
     // Extract our content with meaningful names.
     list($name, $img, $story) = $nanostories[abs($pick)];
 
-    // We need to add an extra class if the current card is dead.
-    $class = ($pick < 0) ? " dead" : "";
+    // We need to add an extra class if the current card is hospitalised.
+    $class = ($pick < 0) ? " hospitalised" : "";
 
     echo "<div id='".$name."' class='roundrect".$class."'>\n";
 
@@ -177,8 +181,7 @@ foreach ($deck as &$pick)
     echo "</div>\n\n";
 }
 
-echo '<br/><br/><iframe class="roundrect" src="https://docs.google.com/forms/d/e/1FAIpQLSd7-jRJjHG2e22YP1crQKw6nXTcnfefL63Gyi2t3oJzjQPlxg/viewform?embedded=true" width="400" height="1200" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe></div></body></html>';
+echo '<br/><br/><h2><a href="https://blog.shadowpox.org/p/game-credits.html">Game Credits and More Info</a></h2></br></div></body></html>';
 
 exit;
 ?>
-
