@@ -79,14 +79,15 @@ error_reporting(-1);
 $infections = 0;
 $victims = 0;
 $stayedhome = false;
-
+$demoscreen = false;
+$highscore = "These are all the people you can save by staying inside.";
 
 // We must be explicity passed a card list as a parameter
 if ( isset($_REQUEST['cards']) && !empty($_REQUEST['cards']))
 {
 	// Build the deck from the cards param passed in.
-	// Any elements beyond 100 are left in the 101th entry.
-	$cards = explode(',', $_REQUEST['cards'], 101);
+	// Any elements beyond 99 are left in the 100th entry.
+	$cards = explode(',', $_REQUEST['cards'], 100);
 	$infections = count($cards);
 
     // Have we been explicity passed stayed-at-home status?
@@ -94,62 +95,83 @@ if ( isset($_REQUEST['cards']) && !empty($_REQUEST['cards']))
     {
         $stayedhome = $_REQUEST['stayedhome'];
     }
+
+}
+
+// If we're explicitly asked for a demo, or received a GET request, then show the demo screen.
+if ( isset($_REQUEST['demoscreen']) || $_SERVER['REQUEST_METHOD'] != 'POST' )
+{
+	$stayedhome = true;
+    $demoscreen = true;
+	$infections = 99;
 }
 
 
 // Is the infection count is within range?
-if ( $infections < 1 || $infections > 100)
+if ( $infections < 0 || $infections > 99)
 {
-    // Code supplied is out of range - redirect to error page.
-//    Header("Location: ".$url);
-    echo "<h2>Infections ".$infections." out of range</h2>";
-    exit;
+    // Code supplied is out of range - rather than redirect to error page, we show all cards.
+	$demoscreen = true;
+	$infections = 99;
 }
 
-// Count the deaths - they're negative numbers.
+// Negative numbers represent hospitalisations.
 $victims = 0;
+$decksize = $infections;
 
-
-for ($i = 0; $i < $infections; $i++)
+// Zero infections means show all cards.
+if ($infections == 0)
 {
-	$deck[$i] = intval($cards[$i]);
+	$highscore = "Congratulations! Because you stayed at home, no one in your community caught the shadowpox virus from you.";
+	$stayedhome = true;
+	$decksize = 99;
+}
 
-	if ($deck[$i]==0 or abs($deck[$i] > 100))
+for ($i = 0; $i < $decksize; $i++)
+{
+	if ($demoscreen || $stayedhome)
 	{
-//    	Header("Location: ".$url);
-		echo "<h2>Card ".$deck[$i]." out of range</h2>";
-	    exit;
+		// Deal a dummy deck.
+		$deck[$i] = $i + 1;
 	}
-
-	if ($deck[$i] < 0)
+	else
 	{
-		$victims++;
+		// Use the deck supplied.
+		$deck[$i] = intval($cards[$i]);
+
+		// Force cards to range
+		if ($deck[$i]==0 || abs($deck[$i]) > 100)
+		{
+ 			$deck[$i] = ($deck[$i] % 100)+1;
+		}
+
+		if ($deck[$i] < 0)
+		{
+			$victims++;
+		}
 	}
 }
 
 // Let's do some grammar ;)
 $people = ($infections < 2) ? "this 1 person" : "these ".$infections." people";
 
-$collection = "Infection";
-$choice = " not ";
-$caught = "caught";
-$hospitalised = "needed hospital care.";
-
 if ($stayedhome)
 {
-    $collection = "Protection";
-    $choice = "";
-    $caught = "did not catch";
-    $hospitalised = "would have ".$hospitalised;
+	echo "<h2>This is your Protection Collection.</h2>\n";
+	echo "<h2>".$highscore."</h2>\n";
 }
-
-echo "<h2>This is your ".$collection." Collection.</h2>\n";
-echo "<h2>Because you chose ".$choice."to stay home, ".$people." in your community ".$caught." the shadowpox virus from you.</h2>\n";
-
-if ($victims > 0)
+else
 {
-    echo "<h2>The ".$victims." with a darker background ".$hospitalised."</h2>";
+	echo "<h2>This is your Infection Collection.</h2>\n";
+
+	echo "<h2>Because you chose not to stay home, ".$people." in your community caught the shadowpox virus from you.</h2>\n";
+
+	if ($victims > 0)
+	{
+    	echo "<h2>The ".$victims." with a darker background needed hospital care.</h2>";
+	}
 }
+
 
 //echo "<h3>Scroll down to the bottom of the page to add your own Shadowpox character.</h3>\n";
 echo "</div>\n";
@@ -171,17 +193,18 @@ foreach ($deck as &$pick)
     echo "<div id='".$name."' class='roundrect".$class."'>\n";
 
     // Output image, name and nanostory.
-//    echo $bIsKiosk ? "<a href='".$url."'/>" : "";
     echo "<img src='/png/".$img."' id='img".sprintf("%02d", abs($pick))."'/><br/>\n";
-//    echo $bIsKiosk ? "</a>" : "";
 
     echo "<h2>".$name."</h2>\n";
     echo "<i>".$story."</i></br>\n";
-    
+
     echo "</div>\n\n";
 }
 
-echo '<br/><br/><h2><a href="https://blog.shadowpox.org/p/game-credits.html">Game Credits and More Info</a></h2></br></div></body></html>';
+echo '<br/><br/>';
+echo '<h2><a href="/game">Try Again</a></h2>';
+echo '<h2><a href="https://blog.shadowpox.org/p/game-credits.html">Game Credits and More Info</a></h2>';
+echo '</br></div></body></html>';
 
 exit;
 ?>
